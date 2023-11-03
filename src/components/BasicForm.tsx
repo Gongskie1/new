@@ -8,7 +8,7 @@ const onSubmit = () =>{
 const BasicForm = () => {
 
 
-  const {values, handleBlur, handleChange, handleSubmit} = useFormik({
+  const {values, errors, handleBlur, isSubmitting , handleChange, handleSubmit} = useFormik({
     initialValues : { 
       email: '',
       age: '',
@@ -18,6 +18,8 @@ const BasicForm = () => {
      validationSchema: basicSchema,
      onSubmit
   })
+
+  
   return (
     <div className="flex flex-col">
       <form autoComplete="off" className=" flex flex-col">
@@ -29,8 +31,8 @@ const BasicForm = () => {
          value={values.email} 
          onChange={handleChange}
          onBlur={handleBlur}/>
-
-          <label htmlFor="age">age</label>
+        {errors.email && <p className="text-[red]">{errors.email}</p> }
+        <label htmlFor="age">age</label>
         <input
          type="number" 
          id="age" 
@@ -38,8 +40,8 @@ const BasicForm = () => {
          value={values.age} 
          onChange={handleChange}
          onBlur={handleBlur}/>
-
-          <label htmlFor="password">password</label>
+        {errors.age && <p className="text-[red]">{errors.age}</p> }
+        <label htmlFor="password">password</label>
         <input
          type="password" 
          id="password" 
@@ -47,7 +49,7 @@ const BasicForm = () => {
          value={values.password} 
          onChange={handleChange}
          onBlur={handleBlur}/>
-
+         {errors.password && <p className="text-[red]">{errors.password}</p> }
          <label htmlFor="cpassword">Confirm Password</label>
          <input
          type="cpassword" 
@@ -56,11 +58,10 @@ const BasicForm = () => {
          value={values.cpassword} 
          onChange={handleChange}
          onBlur={handleBlur}/>
+         {errors.cpassword && <p className="text-[red]">{errors.cpassword}</p> }
+
+         <button disabled={isSubmitting} type="submit">submit</button>
       </form>
-      <p>{values.email}</p>
-      <p>{values.age}</p>
-      <p>{values.password}</p>
-      <p>{values.cpassword}</p>
     </div>
   )
 }
